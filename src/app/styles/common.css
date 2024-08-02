@@ -1,0 +1,6 @@
+.auth-input {
+  @apply w-full p-3 pl-3 rounded bg-[#eee] text-black border border-[#c5c5c5] placeholder:text-black focus:bg-[#eee] focus:text-black focus:bg-opacity-100 focus:outline-black focus:placeholder:text-slate-500;
+}
+.auth-title {
+  @apply text-3xl text-center font-semibold my-6 mt-4 text-black;
+}

@@ -1,12 +1,10 @@
-import { ChildrenType } from '@/types/common'
-import React, { FC } from 'react'
+import { ChildrenType } from '@/types/types';
+import React, { FC } from 'react';
 
-const AuthLayout:FC<ChildrenType> = ({ children }) => {
-	return (
-		<section className='w-full h-full flex items-center justify-center'>
-			{children}
-		</section>
-	)
-}
+const AuthLayout: FC<ChildrenType> = ({ children }) => (
+  <section className="w-full h-full flex items-center justify-center">
+    {children}
+  </section>
+);
 
-export default AuthLayout
+export default AuthLayout;
