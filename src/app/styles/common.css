@@ -4,3 +4,6 @@
 .auth-title {
   @apply text-3xl text-center font-semibold my-6 mt-4 text-black;
 }
+.nav-link {
+  @apply flex w-full items-center gap-4 p-3 rounded-lg transition-all hover:bg-gray-200;
+}
