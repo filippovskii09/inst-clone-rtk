@@ -1,7 +1,10 @@
-import { SignupInputProps } from '@/types/common';
+import { SignupInputProps } from '@/types/types';
 import { FC } from 'react';
 
-const SignupEmail: FC<SignupInputProps> = ({ setCredentials, credentials }) => (
+const AuthEmailInput: FC<SignupInputProps> = ({
+  setCredentials,
+  credentials,
+}) => (
   <div className="relative">
     <input
       type="email"
@@ -21,4 +24,4 @@ const SignupEmail: FC<SignupInputProps> = ({ setCredentials, credentials }) => (
   </div>
 );
 
-export default SignupEmail;
+export default AuthEmailInput;

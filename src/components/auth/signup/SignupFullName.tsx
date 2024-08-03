@@ -1,4 +1,4 @@
-import { SignupInputProps } from '@/types/common';
+import { SignupInputProps } from '@/types/types';
 import { FC } from 'react';
 
 const SignupEmail: FC<SignupInputProps> = ({ setCredentials, credentials }) => (

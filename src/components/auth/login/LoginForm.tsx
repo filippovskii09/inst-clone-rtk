@@ -1,24 +1,21 @@
 'use client';
-import { FormEvent, useState } from 'react';
-import SignupNick from './SignupNick';
-import SignupFullName from './SignupFullName';
-import { handleFocus } from '@/utils/auth/handleFocus.utils';
+import React, { FormEvent, useState } from 'react';
 import AuthSubmitButton from '../AuthSubmitButton';
-import { isValidEmail } from '@/utils/auth/validation/emailValidation';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '@/store/store';
 import AuthEmailInput from '../AuthEmailInput';
 import AuthPasswordInput from '../AuthPasswordInput';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import { isValidEmail } from '@/utils/auth/validation/emailValidation';
+import { handleFocus } from '@/utils/auth/handleFocus.utils';
+import { loginUser } from '@/features/auth/loginThunk';
 import { useRouter } from 'next/navigation';
-import { signupUser } from '@/features/auth/signupThunk';
 
-const SignupForm = () => {
+const LoginForm = () => {
   const [credentials, setCredentials] = useState({
     email: '',
-    username: '',
-    fullname: '',
     password: '',
   });
+
   const dispatch = useDispatch<AppDispatch>();
   const { loading } = useSelector((state: RootState) => state.auth);
 
@@ -26,10 +23,10 @@ const SignupForm = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { email, username, fullname, password } = credentials;
+    const { email, password } = credentials;
     let isValid = true;
 
-    if (!email && !username && !fullname && !password) {
+    if (!email && !password) {
       const allFields = document.querySelectorAll('.auth-input');
 
       allFields.forEach((field) => {
@@ -70,9 +67,7 @@ const SignupForm = () => {
     if (!isValid) return;
 
     try {
-      await dispatch(
-        signupUser({ email, password, username, fullname }),
-      ).unwrap();
+      await dispatch(loginUser({ email, password })).unwrap();
       router.push('/');
     } catch (error: any) {
       console.error('Реєстрація не вдалася:', error.message);
@@ -86,19 +81,14 @@ const SignupForm = () => {
           setCredentials={setCredentials}
           credentials={credentials}
         />
-        <SignupNick setCredentials={setCredentials} credentials={credentials} />
-        <SignupFullName
-          setCredentials={setCredentials}
-          credentials={credentials}
-        />
         <AuthPasswordInput
           setCredentials={setCredentials}
           credentials={credentials}
         />
-        <AuthSubmitButton text="Sign up" loading={loading} />
+        <AuthSubmitButton text="Login" loading={loading} />
       </div>
     </form>
   );
 };
 
-export default SignupForm;
+export default LoginForm;

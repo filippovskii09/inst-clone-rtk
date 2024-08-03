@@ -45,6 +45,7 @@ export const signupUser = createAsyncThunk<User, SignupPayload>(
       };
 
       await setDoc(doc(db, 'users', firebaseUser.uid), userData);
+      localStorage.setItem('user', JSON.stringify(userData));
       return userData;
     } catch (error: any) {
       console.error('Error during user registration:', error);
