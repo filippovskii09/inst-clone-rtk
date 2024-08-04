@@ -5,5 +5,15 @@
   @apply text-3xl text-center font-semibold my-6 mt-4 text-black;
 }
 .nav-link {
-  @apply flex w-full items-center gap-4 p-3 rounded-lg transition-all hover:bg-gray-200;
+  @apply flex items-center gap-4 p-3 rounded-lg transition-all md:hover:bg-gray-200;
+}
+.active-nav-link {
+	@apply font-bold;
+}
+.nav-link.active-nav-link path {
+	fill: #000;
+	stroke-width: 3px;
+}
+.nav-link-subscribe {
+	@apply xl:block hidden;
 }

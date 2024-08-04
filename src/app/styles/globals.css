@@ -19,3 +19,17 @@ body {
   display: flex;
   flex-direction: column;
 }
+main {
+	@media (max-width: 1536px){
+		width: calc(100% - 320px);
+	}
+	@media (max-width: 1260px){
+		width: calc(100% - 240px);
+	}
+	@media (min-width: 1260px){
+		width: calc(100% - 72px);
+	}
+	@media (max-width: 768px){
+		width: 100%;
+	}
+}

@@ -7,12 +7,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 
-const Navbar = () => {
+const MobileNavbar = () => {
 	const pathname = usePathname();
 	const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="w-full flex flex-col gap-2">
+    <nav className="w-full flex justify-evenly items-center gap-2 border-t border-r-[#dddddd] fixed left-0 bottom-0 md:hidden">
       <Link href="/" className={`nav-link ${isActive("/") ? "active-nav-link" : ""}`} passHref>
         <HomeIcon />
         <p className='nav-link-subscribe'>Home</p>
@@ -20,10 +20,6 @@ const Navbar = () => {
       <Link href="/messages" className={`nav-link ${isActive("/messages") ? "active-nav-link" : ""}`} passHref>
         <MessagesIcon />
         <p className='nav-link-subscribe'>Messages</p>
-      </Link>
-      <Link href="/create" className={`nav-link ${isActive("/create") ? "active-nav-link" : ""}`} passHref>
-        <CreateIcon />
-        <p className='nav-link-subscribe'>Create</p>
       </Link>
       <Link href="/profile" className={`nav-link ${isActive("/profile") ? "active-nav-link" : ""}`} passHref>
         <Image
@@ -39,4 +35,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default MobileNavbar;
