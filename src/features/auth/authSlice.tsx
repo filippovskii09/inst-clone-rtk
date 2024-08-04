@@ -11,6 +11,7 @@ const initialState: UserState = {
   user: initialUser,
   loading: false,
   error: null,
+  users: [],
 };
 
 export const authSlice = createSlice({

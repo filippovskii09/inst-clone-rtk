@@ -8,12 +8,12 @@
   @apply flex items-center gap-4 p-3 rounded-lg transition-all md:hover:bg-gray-200;
 }
 .active-nav-link {
-	@apply font-bold;
+  @apply font-bold;
 }
 .nav-link.active-nav-link path {
-	fill: #000;
-	stroke-width: 3px;
+  fill: #000;
+  stroke-width: 3px;
 }
 .nav-link-subscribe {
-	@apply xl:block hidden;
+  @apply xl:block hidden;
 }

@@ -15,4 +15,5 @@ export type UserState = {
   user: User | null;
   loading: boolean;
   error: string | null;
+  users: User[];
 };

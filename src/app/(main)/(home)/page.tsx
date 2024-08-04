@@ -1,3 +1,5 @@
+import UsersList from '@/components/users/UsersList';
+
 export default function Home() {
-  return <p>Home page</p>;
+  return <UsersList />;
 }
