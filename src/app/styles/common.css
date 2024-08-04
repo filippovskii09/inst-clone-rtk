@@ -1,0 +1,19 @@
+.auth-input {
+  @apply w-full p-3 pl-3 rounded bg-[#eee] text-black border border-[#c5c5c5] placeholder:text-black focus:bg-[#eee] focus:text-black focus:bg-opacity-100 focus:outline-black focus:placeholder:text-slate-500;
+}
+.auth-title {
+  @apply text-3xl text-center font-semibold my-6 mt-4 text-black;
+}
+.nav-link {
+  @apply flex items-center gap-4 p-3 rounded-lg transition-all md:hover:bg-gray-200;
+}
+.active-nav-link {
+  @apply font-bold;
+}
+.nav-link.active-nav-link path {
+  fill: #000;
+  stroke-width: 3px;
+}
+.nav-link-subscribe {
+  @apply xl:block hidden;
+}
