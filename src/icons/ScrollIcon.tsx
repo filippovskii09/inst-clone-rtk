@@ -1,0 +1,46 @@
+export const ScrollIcon = () => (
+  <svg
+    aria-label="Feed"
+    className="x1lliihq x1n2onr6 x1roi4f4"
+    fill="#737373"
+    height="24"
+    role="img"
+    viewBox="0 0 24 24"
+    width="24"
+  >
+    <title>Feed</title>
+    <rect
+      fill="none"
+      height="10"
+      stroke="#737373"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="2"
+      width="12"
+      x="6"
+      y="7"
+    ></rect>
+    <line
+      fill="none"
+      stroke="#737373"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+      x1="6.002"
+      x2="18"
+      y1="3.004"
+      y2="3.004"
+    ></line>
+    <line
+      fill="none"
+      stroke="#737373"
+      strokeLinecap="round"
+      strokeMiterlimit="10"
+      strokeWidth="2"
+      x1="6.002"
+      x2="18"
+      y1="21"
+      y2="21"
+    ></line>
+  </svg>
+);

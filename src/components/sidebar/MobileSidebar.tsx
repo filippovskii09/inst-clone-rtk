@@ -1,18 +1,19 @@
-import { CreateIcon } from '@/icons/sidebar/CreateIcon';
-import { InstagramTextIcon } from '@/icons/sidebar/InstagramTextIcon';
-import Link from 'next/link';
-import React from 'react';
+'use client';
+import React, { FC } from 'react';
+import HomeSidebarContent from './HomeSidebarContent';
+import { usePathname } from 'next/navigation';
+import ProfileSidebarContent from './ProfileSidebarContent';
 
-const MobileSidebar = () => {
+const MobileSidebar: FC = () => {
+  const pathname = usePathname();
+
+  const isHomePage = pathname === '/';
+  const isProfilePage = pathname === '/profile';
+
   return (
     <aside className="w-full p-3 justify-between items-center border-b border-r-[#dddddd] md:hidden flex">
-      <div className="pt-1">
-        <InstagramTextIcon />
-      </div>
-      <Link href="/create">
-        <CreateIcon />
-        <p className="nav-link-subscribe">Create</p>
-      </Link>
+      {isHomePage && <HomeSidebarContent />}
+      {isProfilePage && <ProfileSidebarContent />}
     </aside>
   );
 };

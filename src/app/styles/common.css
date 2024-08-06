@@ -11,9 +11,23 @@
   @apply font-bold;
 }
 .nav-link.active-nav-link path {
-  fill: #000;
-  stroke-width: 3px;
+  @apply fill-black;
 }
 .nav-link-subscribe {
   @apply xl:block hidden;
+}
+.profile-info-col {
+  @apply flex flex-col md:flex-row md:gap-1 justify-center items-center text-center text-sm;
+}
+.profile-info-amount {
+  @apply text-black font-bold text-base;
+}
+.profile-info-text {
+  @apply text-[#737373] md:text-black;
+}
+.profile-icon-subscribe {
+  @apply text-xs text-[#737373] uppercase hidden md:block;
+}
+.secondary-grey-btn {
+  @apply bg-[#efefef] rounded-lg text-black sm:w-32 w-24 h-8 flex items-center justify-center;
 }
