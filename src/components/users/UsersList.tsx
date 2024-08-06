@@ -15,7 +15,7 @@ const UsersList = () => {
     (filteredUser) => filteredUser.uid !== user?.uid,
   );
   return (
-    <div className="flex flex-col gap-4 max-w-[600px] w-full mx-auto">
+    <div className="flex flex-col gap-4 max-w-[600px] w-full mx-auto px-3">
       <h5 className="text-lg font-semibold mb-5 mt-2">Suggested for you</h5>
       {filteredUsers.length > 0 &&
         filteredUsers.map((user) => <UsersItem key={user.uid} user={user} />)}

@@ -5,7 +5,6 @@ import { MessagesIcon } from '@/icons/sidebar/MessagesIcon';
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -42,13 +41,18 @@ const Navbar = () => {
         className={`nav-link ${isActive('/profile') ? 'active-nav-link' : ''}`}
         passHref
       >
-        <Image
-          src="/images/profile-image.jpeg"
-          width={24}
-          height={24}
-          alt="Picture of the author"
-          className="rounded-full"
-        />
+        <div className="flex items-center justify-center relative">
+          <Image
+            src="/images/profile-image.jpeg"
+            width={24}
+            height={24}
+            alt="Picture of the author"
+            className="rounded-full z-20"
+          />
+          <div
+            className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-7 h-7 z-10 bg-black rounded-full ${isActive('/profile') ? 'block' : 'hidden'}`}
+          ></div>
+        </div>
         <p className="nav-link-subscribe">Profile</p>
       </Link>
     </nav>

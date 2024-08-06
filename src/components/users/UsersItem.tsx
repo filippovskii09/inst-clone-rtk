@@ -26,7 +26,7 @@ const UsersItem: FC<UsersItemProps> = ({ user }) => {
         <ProfileImage profileImageURL={profileImageURL} />
         <div className="">
           <Link
-            href={`/user/${username}`}
+            href={`/${username}`}
             className="text-ellipsis overflow-hidden whitespace-nowrap font-semibold"
           >
             {username}
