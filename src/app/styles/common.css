@@ -33,5 +33,5 @@
 }
 
 .more-modal {
-	box-shadow: 0 4px 12px rgba(var(--web-always-black), .15);
+  box-shadow: 0 4px 12px rgba(var(--web-always-black), 0.15);
 }

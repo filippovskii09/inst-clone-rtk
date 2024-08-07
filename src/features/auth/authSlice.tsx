@@ -47,10 +47,10 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-			.addCase(logout.pending, (state) => {
-				state.loading = true;
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
         state.error = null;
-			})
+      })
       .addCase(logout.fulfilled, (state) => {
         state.loading = false;
         state.user = null;
@@ -59,7 +59,7 @@ export const authSlice = createSlice({
         state.loading = false;
         state.error = action.error.message || 'Logout failed';
       });
-		},
+  },
 });
 
 export default authSlice.reducer;
