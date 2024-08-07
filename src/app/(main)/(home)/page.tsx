@@ -1,3 +1,5 @@
 import UsersList from '@/components/users/UsersList';
 
-export const Home = () => <UsersList />;
+const Home = () => <UsersList />;
+
+export default Home;

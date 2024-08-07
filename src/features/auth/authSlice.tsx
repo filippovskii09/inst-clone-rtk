@@ -2,6 +2,7 @@ import { User, UserState } from '@/types/User.type';
 import { createSlice } from '@reduxjs/toolkit';
 import { signupUser } from './signupThunk';
 import { loginUser } from './loginThunk';
+import { logout } from './logoutThunk';
 
 const isBrowser = typeof window !== 'undefined';
 const savedUser = isBrowser ? localStorage.getItem('user') : null;
@@ -45,8 +46,20 @@ export const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
+      })
+			.addCase(logout.pending, (state) => {
+				state.loading = true;
+        state.error = null;
+			})
+      .addCase(logout.fulfilled, (state) => {
+        state.loading = false;
+        state.user = null;
+      })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Logout failed';
       });
-  },
+		},
 });
 
 export default authSlice.reducer;
