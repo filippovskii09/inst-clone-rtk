@@ -24,19 +24,19 @@ const UsersItem: FC<UsersItemProps> = ({ user }) => {
     <div className="flex items-center w-full justify-between p-1 text-sm">
       <div className="flex items-center gap-2.5">
         <ProfileImage profileImageURL={profileImageURL} />
-        <div className="">
+        <div className="flex flex-col min-w-0">
           <Link
             href={`/${username}`}
-            className="text-ellipsis overflow-hidden whitespace-nowrap font-semibold"
+            className="block text-ellipsis overflow-hidden whitespace-nowrap font-semibold"
           >
             {username}
           </Link>
-          <p className="text-[#737373] text-ellipsis overflow-hidden whitespace-nowrap">
+          <p className="text-[#737373] block text-ellipsis overflow-hidden whitespace-nowrap max-w-full">
             {fullname}
           </p>
         </div>
       </div>
-      <FollowUnfollowButton />
+      <FollowUnfollowButton item={user} />
     </div>
   );
 };

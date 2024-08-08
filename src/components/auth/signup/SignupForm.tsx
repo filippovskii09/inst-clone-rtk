@@ -1,78 +1,37 @@
 'use client';
-import { FormEvent, useState } from 'react';
 import SignupNick from './SignupNick';
 import SignupFullName from './SignupFullName';
-import { handleFocus } from '@/utils/auth/handleFocus.utils';
 import AuthSubmitButton from '../AuthSubmitButton';
-import { isValidEmail } from '@/utils/auth/validation/emailValidation';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import AuthEmailInput from '../AuthEmailInput';
 import AuthPasswordInput from '../AuthPasswordInput';
 import { useRouter } from 'next/navigation';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { signupUser } from '@/features/auth/signupThunk';
+import { isValidEmail } from '@/utils/auth/validation/emailValidation';
+import Link from 'next/link';
+
+type SignupFormInputs = {
+  email: string;
+  username: string;
+  fullname: string;
+  password: string;
+};
 
 const SignupForm = () => {
-  const [credentials, setCredentials] = useState({
-    email: '',
-    username: '',
-    fullname: '',
-    password: '',
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SignupFormInputs>();
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.auth);
-
+  const { loading, error } = useSelector((state: RootState) => state.auth);
   const router = useRouter();
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
-    const { email, username, fullname, password } = credentials;
-    let isValid = true;
-
-    if (!email && !username && !fullname && !password) {
-      const allFields = document.querySelectorAll('.auth-input');
-
-      allFields.forEach((field) => {
-        field.classList.add(
-          'border-red-500',
-          'bg-red-700',
-          'placeholder:text-red-600',
-          'bg-opacity-10',
-        );
-
-        field.addEventListener('focus', (e) => handleFocus(e, field));
-        isValid = false;
-      });
-    }
-
-    const emailField = document.querySelector('#email') as HTMLInputElement;
-    const emailError = document.querySelector('#email-error') as HTMLElement;
-    if (!isValidEmail(email)) {
-      emailField.classList.add(
-        'border-red-500',
-        'bg-red-700',
-        'placeholder:text-red-600',
-        'bg-opacity-10',
-      );
-      emailField.addEventListener('focus', (e) => handleFocus(e, emailField));
-      emailError.style.display = 'block';
-      isValid = false;
-    } else {
-      emailField.classList.remove(
-        'border-red-500',
-        'bg-red-700',
-        'placeholder:text-red-600',
-        'bg-opacity-10',
-      );
-      emailError.style.display = 'none';
-    }
-
-    if (!isValid) return;
-
+  const onSubmit: SubmitHandler<SignupFormInputs> = async (data) => {
     try {
-      await dispatch(
-        signupUser({ email, password, username, fullname }),
-      ).unwrap();
+      await dispatch(signupUser(data)).unwrap();
       router.push('/');
     } catch (error: any) {
       console.error('Реєстрація не вдалася:', error.message);
@@ -80,22 +39,46 @@ const SignupForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
+    <form onSubmit={handleSubmit(onSubmit)} noValidate>
       <div className="flex flex-col gap-4 bg-red">
         <AuthEmailInput
-          setCredentials={setCredentials}
-          credentials={credentials}
+          {...register('email', {
+            required: 'Email is required',
+            validate: isValidEmail,
+          })}
+          error={errors.email?.message}
         />
-        <SignupNick setCredentials={setCredentials} credentials={credentials} />
+        <SignupNick
+          {...register('username', {
+            required: 'Username is required',
+          })}
+          error={errors.username?.message}
+        />
         <SignupFullName
-          setCredentials={setCredentials}
-          credentials={credentials}
+          {...register('fullname', {
+            required: 'Full name is required',
+          })}
+          error={errors.fullname?.message}
         />
         <AuthPasswordInput
-          setCredentials={setCredentials}
-          credentials={credentials}
+          {...register('password', {
+            required: 'Password is required',
+            minLength: {
+              value: 6,
+              message: 'Password must be at least 6 characters long',
+            },
+          })}
+          error={errors.password?.message}
         />
+        {error && <p className="text-red-500">{error}</p>}
         <AuthSubmitButton text="Sign up" loading={loading} />
+        <p className="text-sm my-3">
+          Already have an account?{' '}
+          <Link href="/login" className="font-semibold">
+            Sign in
+          </Link>
+          .
+        </p>
       </div>
     </form>
   );

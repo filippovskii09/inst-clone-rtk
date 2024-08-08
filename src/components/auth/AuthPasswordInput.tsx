@@ -1,18 +1,23 @@
-import { SignupInputProps } from '@/types/types';
-import { FC } from 'react';
+import { AuthInputProps } from '@/types/types';
+import { forwardRef } from 'react';
 
-const AuthPasswordInput: FC<SignupInputProps> = ({
-  setCredentials,
-  credentials,
-}) => (
-  <input
-    type="password"
-    placeholder="Password"
-    className="auth-input"
-    onChange={(e) =>
-      setCredentials({ ...credentials, password: e.target.value })
-    }
-  />
+const AuthPasswordInput = forwardRef<HTMLInputElement, AuthInputProps>(
+  ({ error, ...rest }, ref) => (
+    <>
+      <input
+        type="password"
+        placeholder="Password"
+        className={`auth-input ${error ? 'border-red-500 bg-red-700 placeholder:text-red-600 bg-opacity-10' : ''}`}
+        ref={ref}
+        {...rest}
+      />
+      {error && (
+        <p id="password-error" className="text-red-600">
+          {error}
+        </p>
+      )}
+    </>
+  ),
 );
 
 export default AuthPasswordInput;

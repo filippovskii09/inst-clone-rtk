@@ -9,7 +9,7 @@ const MobileSidebar: FC = () => {
 
   const isHomePage = pathname === '/';
   const isProfilePage = pathname === '/profile';
-
+	
   return (
     <aside className="w-full p-3 justify-between items-center border-b border-r-[#dddddd] md:hidden flex">
       {isHomePage && <HomeSidebarContent />}

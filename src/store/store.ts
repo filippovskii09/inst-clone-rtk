@@ -1,8 +1,10 @@
 import authReducer from '@/features/auth/authSlice';
+import userProfileReducer from '@/features/userProfileSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = {
   auth: authReducer,
+  userProfile: userProfileReducer,
 };
 
 export const store = configureStore({

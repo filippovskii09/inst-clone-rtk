@@ -13,9 +13,11 @@ const Profile = () => {
 
   return (
     <div className="max-w-[935px] mx-auto md:px-5 flex flex-col pb-14">
-      <ProfileHeader isYourProfile={isYourProfile} user={localUser} />
+      <ProfileHeader user={localUser} />
       <ProfilePostsNavbar />
-      {localUser?.posts.length === 0 && <ProfileNoOnePostInfo />}
+      {isYourProfile && localUser?.posts.length === 0 && (
+        <ProfileNoOnePostInfo />
+      )}
     </div>
   );
 };

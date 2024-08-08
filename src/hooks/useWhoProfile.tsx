@@ -1,3 +1,4 @@
+'use client';
 import { RootState } from '@/store/store';
 import { User } from '@/types/User.type';
 import { usePathname } from 'next/navigation';
@@ -9,8 +10,10 @@ const useWhoProfile = () => {
   const [localUser, setLocalUser] = useState<User | null>(null);
   const pathname = usePathname();
   const user = useSelector((state: RootState) => state.auth.user);
-  const { userProfile, handleGetUserByUserName } =
-    useGetUserByUserName(pathname);
+  const userProfile = useSelector(
+    (state: RootState) => state.userProfile.userProfile,
+  );
+  const { handleGetUserByUserName } = useGetUserByUserName(pathname);
   const isYourProfile = useMemo(() => pathname === '/profile', [pathname]);
 
   useEffect(() => {
@@ -18,7 +21,7 @@ const useWhoProfile = () => {
       handleGetUserByUserName();
     }
     setLocalUser(isYourProfile ? user : userProfile);
-  }, [user, userProfile, isYourProfile, handleGetUserByUserName]);
+  }, [isYourProfile]);
 
   return { localUser, isYourProfile };
 };

@@ -30,7 +30,6 @@ export const signupUser = createAsyncThunk<User, SignupPayload>(
       );
 
       const firebaseUser = userCredential.user;
-      console.log(firebaseUser);
       const userData: User = {
         uid: firebaseUser.uid,
         email: firebaseUser.email!,

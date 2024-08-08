@@ -1,5 +1,5 @@
 import { User, UserState } from '@/types/User.type';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { signupUser } from './signupThunk';
 import { loginUser } from './loginThunk';
 import { logout } from './logoutThunk';
@@ -18,7 +18,16 @@ const initialState: UserState = {
 export const authSlice = createSlice({
   initialState,
   name: 'auth',
-  reducers: {},
+  reducers: {
+    updateUserFollowing(
+      state,
+      action: PayloadAction<{ userId: string; following: string[] }>,
+    ) {
+      if (state.user && state.user.uid === action.payload.userId) {
+        state.user.following = action.payload.following;
+      }
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signupUser.pending, (state) => {
@@ -62,4 +71,5 @@ export const authSlice = createSlice({
   },
 });
 
+export const { updateUserFollowing } = authSlice.actions;
 export default authSlice.reducer;

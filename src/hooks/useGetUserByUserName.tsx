@@ -1,18 +1,21 @@
+'use client';
+import { setUserProfile } from '@/features/userProfileSlice';
 import { db } from '@/firebase/firebase';
+import { AppDispatch } from '@/store/store';
 import { User } from '@/types/User.type';
 import { collection, getDocs, query, where } from 'firebase/firestore';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 const useGetUserByUserName = (username: string | null = null) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [userProfile, setUserProfile] = useState<User | null>(null);
+  const dispatch = useDispatch<AppDispatch>();
 
   const handleGetUserByUserName = useCallback(async () => {
     setIsLoading(true);
 
     if (!username) return;
     try {
-      console.log(username);
       const usernameQ = username?.split('/').pop();
       const q = query(
         collection(db, 'users'),
@@ -22,7 +25,7 @@ const useGetUserByUserName = (username: string | null = null) => {
       const querySnapshot = await getDocs(q);
 
       if (querySnapshot.empty) {
-        setUserProfile(null);
+        dispatch(setUserProfile(null));
         setIsLoading(false);
         return;
       }
@@ -31,8 +34,7 @@ const useGetUserByUserName = (username: string | null = null) => {
       querySnapshot.forEach((doc) => {
         userDoc = doc.data() as User;
       });
-
-      setUserProfile(userDoc);
+      dispatch(setUserProfile(userDoc));
     } catch (error: any) {
       console.error(error);
       setIsLoading(false);
@@ -41,7 +43,7 @@ const useGetUserByUserName = (username: string | null = null) => {
     }
   }, [username]);
 
-  return { isLoading, userProfile, handleGetUserByUserName };
+  return { isLoading, handleGetUserByUserName };
 };
 
 export default useGetUserByUserName;
