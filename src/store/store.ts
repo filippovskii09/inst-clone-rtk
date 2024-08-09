@@ -1,5 +1,5 @@
 import authReducer from '@/features/auth/authSlice';
-import userProfileReducer from '@/features/userProfileSlice';
+import userProfileReducer from '@/features/userProfile/userProfileSlice';
 import { configureStore } from '@reduxjs/toolkit';
 
 const rootReducer = {

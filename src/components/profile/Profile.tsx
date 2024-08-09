@@ -1,22 +1,45 @@
 'use client';
 import ProfileNoOnePostInfo from './ProfileNoOnePostInfo';
 import ProfileHeader from './ProfileHeader';
-import useWhoProfile from '@/hooks/useWhoProfile';
 import ProfilePostsNavbar from './ProfilePostsNavbar';
+import { usePathname } from 'next/navigation';
+import { User } from '@/types/User.type';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import UserByUsernameThunk from '@/features/userProfile/UserByUsernameThunk';
 
 const Profile = () => {
-  const { localUser, isYourProfile } = useWhoProfile();
+  const [localUser, setLocalUser] = useState<User | null>(null);
+  const pathname = usePathname();
+  const distpatch = useDispatch<AppDispatch>();
+  const { userProfile, loading } = useSelector(
+    (state: RootState) => state.userProfile,
+  );
 
-  if (!localUser) {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    distpatch(UserByUsernameThunk(pathname));
+  }, []);
+
+  useEffect(() => {
+    setLocalUser(userProfile);
+    console.log(userProfile);
+  }, [userProfile]);
+
+  if (loading) return <div>Loading</div>;
 
   return (
     <div className="max-w-[935px] mx-auto md:px-5 flex flex-col pb-14">
-      <ProfileHeader user={localUser} />
-      <ProfilePostsNavbar />
-      {isYourProfile && localUser?.posts.length === 0 && (
-        <ProfileNoOnePostInfo />
+      {userProfile === null ? (
+        'User upload, wait a moment, please'
+      ) : (
+        <>
+          <ProfileHeader user={localUser as User} />
+          <ProfilePostsNavbar />
+          {pathname === '/profile' && localUser?.posts.length === 0 && (
+            <ProfileNoOnePostInfo />
+          )}
+        </>
       )}
     </div>
   );

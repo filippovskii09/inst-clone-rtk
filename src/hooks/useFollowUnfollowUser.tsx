@@ -1,5 +1,5 @@
 import { updateUserFollowing } from '@/features/auth/authSlice';
-import { updateUserProfile } from '@/features/userProfileSlice';
+import { updateUserProfile } from '@/features/userProfile/userProfileSlice';
 import { db } from '@/firebase/firebase';
 import { AppDispatch, RootState } from '@/store/store';
 import { User } from '@/types/User.type';
@@ -13,12 +13,20 @@ const useFollowUnfollowUser = (item: User) => {
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.auth.user);
 
+  const updateLocalStorage = (updatedUser: User) => {
+    try {
+      localStorage.setItem('user', JSON.stringify(updatedUser));
+    } catch (error) {
+      console.error('Failed to update localStorage:', error);
+    }
+  };
+
   const handleFollowUnfollowUser = async () => {
-    if (!user) return;
-    if (!item) return;
+    if (!user || !item) return;
+
     setIsLoading(true);
     try {
-      const currentUserRef = doc(db, 'users', user?.uid);
+      const currentUserRef = doc(db, 'users', user.uid);
       const userToFollowOrUnfollowRef = doc(db, 'users', item.uid);
 
       await updateDoc(currentUserRef, {
@@ -26,71 +34,45 @@ const useFollowUnfollowUser = (item: User) => {
       });
 
       await updateDoc(userToFollowOrUnfollowRef, {
-        following: isFollowing ? arrayRemove(user.uid) : arrayUnion(user.uid),
+        followers: isFollowing ? arrayRemove(user.uid) : arrayUnion(user.uid),
       });
 
-      if (isFollowing) {
-        dispatch(
-          updateUserFollowing({
-            userId: user.uid,
-            following: user.following.filter((uid) => uid !== item.uid),
-          }),
-        );
+      const updatedFollowing = isFollowing
+        ? user.following.filter((uid) => uid !== item.uid)
+        : [...user.following, item.uid];
 
-        dispatch(
-          updateUserProfile({
-            userId: item.uid,
-            followers: user.followers.filter((uid) => uid !== user.uid),
-          }),
-        );
+      const updatedFollowers = isFollowing
+        ? item.followers.filter((uid) => uid !== user.uid)
+        : [...item.followers, user.uid];
 
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            ...user,
-            following: user.following.filter((uid) => uid !== item.uid),
-          }),
-        );
-        setIsFollowing(false);
-      } else {
-        dispatch(
-          updateUserFollowing({
-            userId: user.uid,
-            following: [...user.following, item.uid],
-          }),
-        );
+      dispatch(
+        updateUserFollowing({
+          userId: user.uid,
+          following: updatedFollowing,
+        }),
+      );
 
-        dispatch(
-          updateUserProfile({
-            userId: item.uid,
-            followers: [...item.followers, user.uid],
-          }),
-        );
+      dispatch(
+        updateUserProfile({
+          userId: item.uid,
+          followers: updatedFollowers,
+        }),
+      );
 
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            ...user,
-            following: [...user.following, item.uid],
-          }),
-        );
-
-        setIsFollowing(true);
-      }
-    } catch (error: any) {
-      console.error(error);
-      setIsLoading(false);
+      updateLocalStorage({ ...user, following: updatedFollowing });
+      setIsFollowing(!isFollowing);
+    } catch (error) {
+      console.error('Error following/unfollowing user:', error);
     } finally {
       setIsLoading(false);
     }
   };
 
   useEffect(() => {
-    if (user) {
-      const isFollowing = user.following.includes(item?.uid);
-      setIsFollowing(isFollowing);
+    if (user && item) {
+      setIsFollowing(user.following.includes(item.uid));
     }
-  }, [user, item?.uid]);
+  }, [user, item]);
 
   return { isLoading, isFollowing, handleFollowUnfollowUser };
 };

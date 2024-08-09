@@ -1,9 +1,7 @@
 'use client';
 import useFollowUnfollowUser from '@/hooks/useFollowUnfollowUser';
-import useWhoProfile from '@/hooks/useWhoProfile';
 import { User } from '@/types/User.type';
-import { usePathname } from 'next/navigation';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 
 type FollowUnfollowButtonProps = {
   item?: User | null;

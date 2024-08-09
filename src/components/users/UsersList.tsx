@@ -14,17 +14,21 @@ const UsersList = () => {
   const filteredUsers = users.filter(
     (filteredUser) => filteredUser.uid !== user?.uid,
   );
+
+  const noOneUserRegistered = (
+    <p className="text-xl ">No one users doesn`t regist</p>
+  );
   return (
     <div className="flex flex-col gap-4 max-w-[600px] w-full mx-auto px-3">
       <h5 className="text-lg font-semibold mb-5 mt-2">Suggested for you</h5>
       {filteredUsers.length > 0 ? (
-        <ul>
+        <ul className="flex flex-col gap-4">
           {filteredUsers.map((user) => (
             <UsersItem key={user.uid} user={user} />
           ))}
         </ul>
       ) : (
-        <p className="text-xl ">No one users doesn`t regist</p>
+        noOneUserRegistered
       )}
     </div>
   );

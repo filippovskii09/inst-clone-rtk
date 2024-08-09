@@ -1,5 +1,5 @@
-import Profile from '@/components/profile/Profile';
+import CurrentProfile from '@/components/profile/CurrentProfile';
 
-const ProfilePage = () => <Profile />;
+const ProfilePage = () => <CurrentProfile />;
 
 export default ProfilePage;

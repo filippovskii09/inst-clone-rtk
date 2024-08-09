@@ -1,3 +1,4 @@
+'use client';
 import Image from 'next/image';
 import ProfileUsername from './ProfileUsername';
 import ProfileFullname from './ProfileFullname';
@@ -12,6 +13,7 @@ type ProfileHeaderProps = {
 };
 
 const ProfileHeader: FC<ProfileHeaderProps> = ({ user }) => {
+  if (!user) return;
   const { username, fullname, bio, posts, following, followers } = user;
 
   return (
@@ -25,7 +27,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = ({ user }) => {
           className="rounded-full w-20 h-20 md:h-40 md:w-40"
         />
       </div>
-      <ProfileUsername item={user} username={username} />
+      <ProfileUsername username={username} item={user} />
       <div className="flex flex-col col-span-3 md:col-start-2 md:col-end-4 row-start-2 md:row-start-3 ml-4 md:ml-0 mt-5 md:mt-0">
         <ProfileFullname fullname={fullname} />
         {bio && <ProfileBio bio={bio} />}
