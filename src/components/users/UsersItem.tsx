@@ -1,8 +1,8 @@
 import { User } from '@/types/User.type';
 import Link from 'next/link';
 import React, { FC } from 'react';
-import FollowUnfollowButton from '../FollowUnfollowButton';
-import ProfileImage from '../ProfileImage';
+import FollowUnfollowButton from '../shared/FollowUnfollowButton';
+import ProfileImage from '../shared/ProfileImage';
 
 type UsersItemProps = {
   user: User;

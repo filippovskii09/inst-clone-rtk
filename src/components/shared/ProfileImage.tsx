@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { FC } from 'react';
-import UserImage from '../../public/images/profile-image.jpeg';
+import UserImage from '/public/images/profile-image.jpeg';
 
 type ProfileImageProps = {
   profileImageURL: string;

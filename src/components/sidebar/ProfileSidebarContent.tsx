@@ -1,6 +1,7 @@
 'use client';
 import { SettingIcon } from '@/icons/sidebar/SettingIcon';
 import { RootState } from '@/store/store';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 
@@ -16,9 +17,9 @@ const ProfileSidebarContent = () => {
 
   return (
     <>
-      <div className="pt-1">
+      <Link href="/account/settings" className="pt-1">
         <SettingIcon />
-      </div>
+      </Link>
       {localUser?.username && (
         <h4 className="text-lg font-semibold">{localUser?.username}</h4>
       )}

@@ -14,7 +14,10 @@ const Logout = () => {
     router.push('/login');
   };
   return (
-    <button className="nav-link" onClick={handleLogout}>
+    <button
+      className="nav-link md:text-black text-red-500"
+      onClick={handleLogout}
+    >
       {loading ? 'Loading' : 'Log out'}
     </button>
   );

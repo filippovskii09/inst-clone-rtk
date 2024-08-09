@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import FollowUnfollowButton from '../FollowUnfollowButton';
+import FollowUnfollowButton from '../shared/FollowUnfollowButton';
 import { User } from '@/types/User.type';
 import { usePathname } from 'next/navigation';
 
